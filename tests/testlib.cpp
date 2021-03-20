@@ -42,6 +42,7 @@ TEST_CASE ("test SAME_TOKEN (x, y)")
 
 int main( int argc, char* argv[] ) {
 
+    cout << BOOST_TTI_NAMESPACE
     int result = Catch::Session().run( argc, argv );
 
   // global clean-up...
