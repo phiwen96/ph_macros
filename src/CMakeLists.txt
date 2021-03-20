@@ -27,7 +27,7 @@ target_include_directories(${self} PRIVATE
     $<INSTALL_INTERFACE:include/${self}>
 )
 
-target_include_directories(ph_type_list PUBLIC
+target_include_directories(${self} PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )

@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.19.4)
 
 project (
-	ph_type_list
+	ph_macros
 	VERSION 1.0
 	DESCRIPTION "Very nice project"
 	LANGUAGES CXX
@@ -20,7 +20,6 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 	# Let's nicely support folders in IDEs
 	set_property (GLOBAL PROPERTY USE_FOLDERS ON)
 
-	find_package (Boost 1.75 REQUIRED)
 
 
 	# Testing only available if this is the main app
