@@ -40,21 +40,54 @@ consteval size_t string_size (char const(&)[N])
         defer (foo) (bar ())    foo (1, 2)
  DEFER(A)() expands to A()
  */
+
+#define EVAL(...)  EVAL1(EVAL1(EVAL1(__VA_ARGS__)))
+#define EVAL1(...) EVAL2(EVAL2(EVAL2(__VA_ARGS__)))
+#define EVAL2(...) EVAL3(EVAL3(EVAL3(__VA_ARGS__)))
+#define EVAL3(...) EVAL4(EVAL4(EVAL4(__VA_ARGS__)))
+#define EVAL4(...) EVAL5(EVAL5(EVAL5(__VA_ARGS__)))
+
+#define EVAL5(...) __VA_ARGS__
 #define PH_$defer(...) __VA_ARGS__ PH_$empty ()
 
 #define EAT(...)
 #define EXPAND(...) __VA_ARGS__
 #define EMPTY()
+#define CHECK_N(x, n, ...) n
+#define CAT(a, ...) PRIMITIVE_CAT(a, __VA_ARGS__)
+#define PRIMITIVE_CAT(a, ...) a ## __VA_ARGS__
+#define COMPL(b) PRIMITIVE_CAT(COMPL_, b)
+#define COMPL_0 1
+#define COMPL_1 0
+#ifdef CHECK
+#undef CHECK
+#endif
+#define CHECK(...) CHECK_N(__VA_ARGS__, 0,)
+#define PROBE(x) x, 1,
+#define NOT(x) CHECK(PRIMITIVE_CAT(NOT_, x))
+#define NOT_0 PROBE(~)
+#define BOOL(x) COMPL(NOT(x))
+
+#define IF(...) BOOST_PP_CAT (IIF_, __VA_ARGS__)//PRIMITIVE_CAT(IIF_, __VA_ARGS__)
+#define IIF_0(...) EXPAND
+#define IIF_1(...) __VA_ARGS__ EAT
+
+//#define IF(...) IIF(BOOL(__VA_ARGS__))
 
 
 
-#define IF_0_ELSE(...) EXPAND
-#define IF_1_ELSE(...) __VA_ARGS__ EAT
-#define IF_ELSE(cond) IF_ ## cond ##_ELSE
 
-#define IF_0(...)
-#define IF_1(...) __VA_ARGS__
-#define IF(cond) IF_ ## cond
+#define IFF_0(...) EXPAND
+#define IFF_1(...) __VA_ARGS__ EAT
+#define IF_ELSE(x) IFF_ ## x
+
+//#define IFF_0(...) EXPAND
+//#define IFF_1(...) __VA_ARGS__ EAT
+#define IF_ELSE2(x, y) EXPAND (DEFER (BOOST_PP_CAT) (IFF_, TOKEN_IS_STRING (x, y)))
+
+//#define IF_0(...)
+//#define IF_1(...) __VA_ARGS__
+//#define IF(cond) IF_ ## cond
 
 
 
@@ -80,8 +113,8 @@ consteval size_t string_size (char const(&)[N])
 //#define TO_UPPER(x)
 
 
-#define PH_MACRO_$token_is_string(x, y) __builtin_choose_expr (same_strings (BOOST_PP_STRINGIZE (x), y), 1, 0)
-#define PH_MACRO_$if_token_is_string(token, string, true, false) __builtin_choose_expr (PH_MACRO_$token_is_string (token, string), true, false)
+#define TOKEN_IS_STRING(x, y) __builtin_choose_expr (same_strings (BOOST_PP_STRINGIZE (x), y), 1, 0)
+#define IF_ELSE_TOKEN_IS_STRING(token, string)  EVAL ( BOOST_PP_CAT (DEFER (IFF_), EVAL (__builtin_choose_expr (same_strings (BOOST_PP_STRINGIZE (token), string), 1, 0))))
 #define PH_MACRO_$has(x) \
     [] (auto a) constexpr { \
         return requires (){a.x;}; \
