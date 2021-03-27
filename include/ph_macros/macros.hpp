@@ -68,9 +68,9 @@ consteval size_t string_size (char const(&)[N])
 #define NOT_0 PROBE(~)
 #define BOOL(x) COMPL(NOT(x))
 
-#define IF(...) BOOST_PP_CAT (IIF_, __VA_ARGS__)//PRIMITIVE_CAT(IIF_, __VA_ARGS__)
-#define IIF_0(...) EXPAND
-#define IIF_1(...) __VA_ARGS__ EAT
+#define IF(...) PRIMITIVE_CAT (IF_, __VA_ARGS__)
+#define IF_0(...) EXPAND
+#define IF_1(...) __VA_ARGS__ EAT
 
 //#define IF(...) IIF(BOOL(__VA_ARGS__))
 
@@ -79,7 +79,7 @@ consteval size_t string_size (char const(&)[N])
 
 #define IFF_0(...) EXPAND
 #define IFF_1(...) __VA_ARGS__ EAT
-#define IF_ELSE(x) IFF_ ## x
+#define IF_ELSE(x) BOOST_PP_EXPAND (BOOST_PP_CAT (IFF_, x))//IFF_ ## x
 
 //#define IFF_0(...) EXPAND
 //#define IFF_1(...) __VA_ARGS__ EAT
