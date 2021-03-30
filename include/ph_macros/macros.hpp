@@ -68,7 +68,7 @@ consteval size_t string_size (char const(&)[N])
 #define NOT_0 PROBE(~)
 #define BOOL(x) COMPL(NOT(x))
 
-#define IF(...) PRIMITIVE_CAT (IF_, __VA_ARGS__)
+#define If(...) PRIMITIVE_CAT (IF_, __VA_ARGS__)
 #define IF_0(...) EXPAND
 #define IF_1(...) __VA_ARGS__ EAT
 
