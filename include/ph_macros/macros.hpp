@@ -1,6 +1,8 @@
 #pragma once
 using namespace std;
 
+#define fwd(x) std::forward <decltype (x)> (x)
+
 namespace {
 template <size_t N, size_t M>
 consteval bool same_strings (char const(&lhs)[N], char const(&rhs)[M])
