@@ -129,3 +129,33 @@ consteval auto my_function_name (char const* s = __builtin_FUNCTION ()) {
 }
 #define MY_FUNCTION_NAME my_function_name ()
 }
+
+
+
+
+
+namespace {
+#define KK(arg, ...) cout << BOOST_PP_STRINGIZE (arg) << endl; //cout << "yoyoyo" << endl;
+
+
+#define X1(r, func, arg) \
+BOOST_PP_EXPAND (func BOOST_PP_SEQ_TO_TUPLE (arg))
+
+#define INVOKE(func, seq) \
+BOOST_PP_SEQ_FOR_EACH (X1, func, seq)
+
+/**
+ example
+ 
+ INVOKE( KK,
+   ((number_t) (int))
+    ((plus_t) (int))
+    ((minus_t) (int))
+    ((multi_t) (int))
+    ((divi_t) (int))
+    ((ph::number_t) (int))
+    ((ph::lparen_t) (int))
+    ((ph::rparen_t) (int))
+ )
+ */
+}
