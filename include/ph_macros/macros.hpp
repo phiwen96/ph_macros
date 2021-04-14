@@ -169,4 +169,11 @@ X (n) \
 break;
 
 #define SWITCH_CASE(j) \
-    BOOST_PP_REPEAT (j, DECL, _) \
+    BOOST_PP_REPEAT (j, DECL, _)
+
+
+
+//{X1 (k, n)} \
+
+#define SWITCH_CASE_2(func, cases, arg) \
+    BOOST_PP_REPEAT (cases, func, arg)
