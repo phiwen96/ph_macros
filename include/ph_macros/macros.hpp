@@ -168,5 +168,5 @@ case n: \
 X (n) \
 break;
 
-#define SWITCH_CASE(j, m) \
-    BOOST_PP_REPEAT (j, DECL, m) \
+#define SWITCH_CASE(j) \
+    BOOST_PP_REPEAT (j, DECL, _) \
