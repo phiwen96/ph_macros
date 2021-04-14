@@ -159,3 +159,14 @@ BOOST_PP_SEQ_FOR_EACH (X1, func, seq)
  )
  */
 }
+
+
+
+
+#define DECL(z, n, text) \
+case n: \
+X (n) \
+break;
+
+#define SWITCH_CASE(j, m) \
+    BOOST_PP_REPEAT (j, DECL, m) \
