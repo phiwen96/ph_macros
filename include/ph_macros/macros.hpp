@@ -163,17 +163,47 @@ BOOST_PP_SEQ_FOR_EACH (X1, func, seq)
 
 
 
-#define DECL(z, n, text) \
+#define DECL(z, n, func) \
+func (n)
+
+#define FOR(j, func) \
+    BOOST_PP_REPEAT (j, DECL, func)
+
+
+#define DECL2(z, n, k) \
 case n: \
-X (n) \
+if constexpr (requires {value.template get <k> ().value = other.value.template get <n> ().value;}) \
+{ \
+cout << "tju" << endl; \
+value.template get <k> ().value = other.value.template get <n> ().value; \
+} \
 break;
-
-#define SWITCH_CASE(j) \
-    BOOST_PP_REPEAT (j, DECL, _)
-
-
-
 //{X1 (k, n)} \
+
+
 
 #define SWITCH_CASE_2(func, cases, arg) \
     BOOST_PP_REPEAT (cases, func, arg)
+
+
+#include <boost/preprocessor/seq/pop_back.hpp>
+#include <boost/preprocessor/seq/pop_front.hpp>
+
+
+//BOOST_PP_SEQ_TO_TUPLE
+
+
+#define lol(n, seq) \
+n, BOOST_PP_EXPAND (BOOST_PP_SEQ_TO_TUPLE BOOST_PP_SEQ_POP_FRONT (seq))
+
+#define DECLx(z, n, func) \
+BOOST_PP_EXPAND (func )
+
+#define lol3()
+
+#define lol2(...) \
+    BOOST_PP_VARIADIC_TO_SEQ (__VA_ARGS__)
+
+
+#define FORx(j, ...) \
+    BOOST_PP_EXPAND (BOOST_PP_REPEAT a, DECLx, lol2 (j, __VA_ARGS__))
