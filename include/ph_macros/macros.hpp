@@ -207,3 +207,26 @@ BOOST_PP_EXPAND (func )
 
 #define FORx(j, ...) \
     BOOST_PP_EXPAND (BOOST_PP_REPEAT a, DECLx, lol2 (j, __VA_ARGS__))
+
+
+
+/**
+ range based for-loop
+ */
+#define PRED(r, state) \
+   BOOST_PP_NOT_EQUAL( \
+      BOOST_PP_TUPLE_ELEM(2, 0, state), \
+      BOOST_PP_INC(BOOST_PP_TUPLE_ELEM(2, 1, state)) \
+   ) \
+   /**/
+
+#define OP(r, state) \
+   ( \
+      BOOST_PP_INC(BOOST_PP_TUPLE_ELEM(2, 0, state)), \
+      BOOST_PP_TUPLE_ELEM(2, 1, state) \
+   ) \
+    /**/
+    
+#define MACRO(r, state) BOOST_PP_TUPLE_ELEM(2, 0, state)
+    
+//    cout << BOOST_PP_STRINGIZE (BOOST_PP_FOR ((5, 10), PRED, OP, MACRO)) << endl;
