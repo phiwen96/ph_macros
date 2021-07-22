@@ -1,5 +1,5 @@
 # Testing library
-ph_fetch (catch2)
+# ph_fetch (catch2)
 
 add_executable (testlib testlib.cpp)
 target_link_libraries (testlib PRIVATE ph_macros Catch2::Catch2)
