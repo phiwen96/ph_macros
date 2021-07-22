@@ -7,8 +7,10 @@ project (
 	LANGUAGES CXX
 )	
 
+if(NOT TARGET phake)
+	add_subdirectory(cmake/phake)
+endif(NOT TARGET phake)
 
-add_subdirectory (cmake/phake)
 
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 	
